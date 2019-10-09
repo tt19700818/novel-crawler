@@ -48,7 +48,7 @@ function feturl(url,callback,id){
   // })
   .end(function(err,res){
       if(err){
-          return err;
+          console.log(`第${id}章请求失败`)
       }
       console.log(res)
       if(res!= undefined){
@@ -56,7 +56,7 @@ function feturl(url,callback,id){
       const arr = [];
       const content = reconvert($("#txt").html());
       //分析结构后分割html
-      const contentArr = content.split('<p></p>')
+      const contentArr = content.split('<br><br>');
       contentArr.forEach(ele=>{
         const data = ele.toString().replace(/(^\s*)|(\s*$)/g, '').replace(/&nbsp;/g, '');
         arr.push(data);
@@ -92,14 +92,6 @@ function saveToMysql(rets) {
     })
   })
 }
-
-// //unicode转汉字
-// function reconvert(str){
-//   str = str.replace(/(&#x)(\w{1,4});/gi, function ($0) {
-//     return String.fromCharCode(parseInt(escape($0).replace(/(%26%23x)(\w{1,4})(%3B)/g, "$2"), 16));
-//   });
-//   return str
-// }
 
 app.get('/', function (req, response, next) {
   
