@@ -1,6 +1,7 @@
 let urlList = require('../urlList');
-const { mysql, cheerio, app, superagent, async, pool} = require('../utils/require');
+const { mysql, cheerio, app, superagent, async, pool, charset} = require('../utils/require');
 const { reconvert } = require('../utils/unicode');
+charset(superagent); //设置字符
 
 let num = 1;//从第几本书开始，失败更改此处
 let bookID = num;
@@ -17,6 +18,7 @@ function main(url){
   console.log(url)
   superagent
     .get(url)
+    .charset('gbk')
     .end((err,res)=>{
       // if(err){
       //     return err;
@@ -25,7 +27,7 @@ function main(url){
       let urls = [];
       total = $('.chapter li').length;
       $('.chapter li').each((i,ele)=>{
-        if(i<total){
+        if(i<chapters){
           urls.push(url + $(ele).find('a').attr('href'))
         }
       })
@@ -46,6 +48,7 @@ function feturl(url,callback,id){
   //   response: 5000,  //5s
   //   deadline: 15000, // 15s
   // })
+  .charset('gbk')
   .end(function(err,res){
       if(err){
           console.log(`第${id}章请求失败`)

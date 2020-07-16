@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const express = require('express');
 const app = express();
 const superagent = require('superagent');
+const charset = require('superagent-charset');
 const async = require('async');
 
 const pool = mysql.createPool({
@@ -19,5 +20,6 @@ module.exports = {
     app,
     superagent,
     async,
-    pool
+    pool,
+    charset
 }
